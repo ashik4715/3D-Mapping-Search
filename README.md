@@ -22,7 +22,10 @@ hoeber-3d-searchscape/
 
 ```bash
 cd hoeber-3d-searchscape/backend
-python -m venv .venv && source .venv/bin/activate  # optional but recommended
+python -m venv .venv
+# macOS/Linux: source .venv/bin/activate
+# Windows (PowerShell): .\.venv\Scripts\Activate.ps1
+# Windows (Git Bash/CMD): source .venv/Scripts/activate
 pip install -r requirements.txt
 python process_logs.py --config backend/config.yaml
 # Output ➜ backend/dist/scene.json
@@ -33,11 +36,23 @@ Key files:
 - `config.yaml`: edit `input_csv`, `output_scene`, and visualization parameters (bucket size, lane spacing, terrain smoothing).
 - `sample_logs/queries.csv`: seed dataset blending IR, HCI, and collaborative exploration queries from a single “lab day.”
 
+## Backend API + Swagger UI
+
+```bash
+cd hoeber-3d-searchscape/backend
+uvicorn app:app --reload --port 8000
+# Open http://localhost:8000/docs for interactive Swagger
+```
+
+- `GET /api/scene?refresh=true` regenerates the JSON before returning it.
+- `GET /api/health` confirms dataset/config status for quick diagnostics.
+
 ## Frontend: navigating the 3D landscape
 
 ```bash
 cd hoeber-3d-searchscape/frontend
 npm install
+# optional: echo "VITE_API_BASE_URL=http://localhost:8000/api" > .env.local
 npm run dev   # open the provided URL to interact with the scene
 ```
 

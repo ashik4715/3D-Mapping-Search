@@ -3,6 +3,8 @@ import SearchTerrainScene from './components/SearchTerrainScene';
 import type { QueryNode, SceneData } from './types/scene';
 import './App.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000/api';
+
 type ScenePreset = {
   id: string;
   label: string;
@@ -12,6 +14,14 @@ type ScenePreset = {
 };
 
 const DATASETS: ScenePreset[] = [
+  {
+    id: 'backend-live',
+    label: 'Live backend (FastAPI)',
+    path: `${API_BASE_URL}/scene?refresh=false`,
+    summary:
+      'Hits the FastAPI endpoint so you can regenerate or inspect data through Swagger.',
+    focus: 'Pair with http://localhost:8000/docs to explore schemas and refresh toggles.',
+  },
   {
     id: 'sensemaking-day',
     label: 'IR × HCI Lab Day (Nov 05)',
