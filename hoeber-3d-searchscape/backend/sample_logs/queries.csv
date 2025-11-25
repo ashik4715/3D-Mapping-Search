@@ -1,0 +1,11 @@
+timestamp,query,intent_topic,session_id,clicks,dwell_seconds,result_count
+2024-11-05T09:10:00-06:00,volume rendering algorithms,3D IR,S1,4,95,12
+2024-11-05T09:42:00-06:00,eye tracking search evaluation,HCI,S1,3,120,8
+2024-11-05T10:05:00-06:00,semantic query reformulation,IR theory,S2,5,110,15
+2024-11-05T10:20:00-06:00,context aware ranking signals,IR theory,S2,2,65,10
+2024-11-05T11:00:00-06:00,gesture based browsing,HCI,S3,6,140,7
+2024-11-05T13:15:00-06:00,volumetric glyph design,Info viz,S4,4,90,9
+2024-11-05T14:00:00-06:00,3d terrain storytelling,Info viz,S4,3,80,11
+2024-11-05T15:45:00-06:00,personalized retrieval history,Personalization,S5,5,130,10
+2024-11-05T16:20:00-06:00,temporal relevance feedback,IR theory,S5,4,100,13
+2024-11-05T18:05:00-06:00,collaborative sensemaking,HCI,S6,7,150,6

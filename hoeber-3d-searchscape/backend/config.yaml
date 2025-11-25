@@ -1,0 +1,11 @@
+input_csv: sample_logs/queries.csv
+output_scene: dist/scene.json
+timeline:
+  bucket_minutes: 60
+  lane_gap: 6.0
+terrain:
+  max_height: 40
+  smoothing_window: 3
+scene:
+  length_units: 120
+  topic_spread: 12

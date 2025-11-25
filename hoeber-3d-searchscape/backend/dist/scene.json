@@ -1,0 +1,347 @@
+{
+  "metadata": {
+    "start": "2024-11-05T09:10:00-06:00",
+    "end": "2024-11-05T18:05:00-06:00",
+    "bucketMinutes": 60,
+    "topics": [
+      {
+        "topic": "3D IR",
+        "lane": 0,
+        "embedding": [
+          0.782,
+          0.172,
+          0.007
+        ]
+      },
+      {
+        "topic": "HCI",
+        "lane": 1,
+        "embedding": [
+          0.206,
+          0.22,
+          0.263
+        ]
+      },
+      {
+        "topic": "IR theory",
+        "lane": 2,
+        "embedding": [
+          0.17,
+          0.064,
+          0.179
+        ]
+      },
+      {
+        "topic": "Info viz",
+        "lane": 3,
+        "embedding": [
+          0.807,
+          0.497,
+          0.36
+        ]
+      },
+      {
+        "topic": "Personalization",
+        "lane": 4,
+        "embedding": [
+          0.616,
+          0.47,
+          0.649
+        ]
+      }
+    ]
+  },
+  "terrainProfile": [
+    {
+      "bucket": 0,
+      "x": 0.0,
+      "height": 6.39,
+      "topTopics": [
+        "IR theory",
+        "HCI",
+        "3D IR"
+      ]
+    },
+    {
+      "bucket": 1,
+      "x": 15.0,
+      "height": 4.26,
+      "topTopics": [
+        "HCI",
+        "IR theory"
+      ]
+    },
+    {
+      "bucket": 2,
+      "x": 30.0,
+      "height": 1.673,
+      "topTopics": []
+    },
+    {
+      "bucket": 3,
+      "x": 45.0,
+      "height": 1.422,
+      "topTopics": []
+    },
+    {
+      "bucket": 4,
+      "x": 60.0,
+      "height": 1.422,
+      "topTopics": [
+        "Info viz"
+      ]
+    },
+    {
+      "bucket": 5,
+      "x": 75.0,
+      "height": 2.476,
+      "topTopics": []
+    },
+    {
+      "bucket": 6,
+      "x": 90.0,
+      "height": 1.879,
+      "topTopics": [
+        "Personalization"
+      ]
+    },
+    {
+      "bucket": 7,
+      "x": 105.0,
+      "height": 3.213,
+      "topTopics": [
+        "IR theory"
+      ]
+    },
+    {
+      "bucket": 8,
+      "x": 120.0,
+      "height": 3.238,
+      "topTopics": [
+        "HCI"
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "query": "volume rendering algorithms",
+      "topic": "3D IR",
+      "timestamp": "2024-11-05T09:10:00-06:00",
+      "sessionId": "S1",
+      "metrics": {
+        "clicks": 4,
+        "dwellSeconds": 95.0,
+        "results": 12,
+        "engagement": 0.609
+      },
+      "position": [
+        0.0,
+        24.343,
+        0
+      ],
+      "embedding": [
+        0.198,
+        0.748,
+        0.455
+      ]
+    },
+    {
+      "query": "eye tracking search evaluation",
+      "topic": "HCI",
+      "timestamp": "2024-11-05T09:42:00-06:00",
+      "sessionId": "S1",
+      "metrics": {
+        "clicks": 3,
+        "dwellSeconds": 120.0,
+        "results": 8,
+        "engagement": 0.651
+      },
+      "position": [
+        7.178,
+        26.057,
+        12
+      ],
+      "embedding": [
+        0.796,
+        0.586,
+        0.221
+      ]
+    },
+    {
+      "query": "semantic query reformulation",
+      "topic": "IR theory",
+      "timestamp": "2024-11-05T10:05:00-06:00",
+      "sessionId": "S2",
+      "metrics": {
+        "clicks": 5,
+        "dwellSeconds": 110.0,
+        "results": 15,
+        "engagement": 0.726
+      },
+      "position": [
+        12.336,
+        29.029,
+        24
+      ],
+      "embedding": [
+        0.119,
+        0.321,
+        0.496
+      ]
+    },
+    {
+      "query": "context aware ranking signals",
+      "topic": "IR theory",
+      "timestamp": "2024-11-05T10:20:00-06:00",
+      "sessionId": "S2",
+      "metrics": {
+        "clicks": 2,
+        "dwellSeconds": 65.0,
+        "results": 10,
+        "engagement": 0.374
+      },
+      "position": [
+        15.701,
+        14.971,
+        24
+      ],
+      "embedding": [
+        0.386,
+        0.808,
+        0.803
+      ]
+    },
+    {
+      "query": "gesture based browsing",
+      "topic": "HCI",
+      "timestamp": "2024-11-05T11:00:00-06:00",
+      "sessionId": "S3",
+      "metrics": {
+        "clicks": 6,
+        "dwellSeconds": 140.0,
+        "results": 7,
+        "engagement": 0.903
+      },
+      "position": [
+        24.673,
+        36.114,
+        12
+      ],
+      "embedding": [
+        0.676,
+        0.882,
+        0.645
+      ]
+    },
+    {
+      "query": "volumetric glyph design",
+      "topic": "Info viz",
+      "timestamp": "2024-11-05T13:15:00-06:00",
+      "sessionId": "S4",
+      "metrics": {
+        "clicks": 4,
+        "dwellSeconds": 90.0,
+        "results": 9,
+        "engagement": 0.589
+      },
+      "position": [
+        54.953,
+        23.543,
+        36
+      ],
+      "embedding": [
+        0.113,
+        0.835,
+        0.17
+      ]
+    },
+    {
+      "query": "3d terrain storytelling",
+      "topic": "Info viz",
+      "timestamp": "2024-11-05T14:00:00-06:00",
+      "sessionId": "S4",
+      "metrics": {
+        "clicks": 3,
+        "dwellSeconds": 80.0,
+        "results": 11,
+        "engagement": 0.491
+      },
+      "position": [
+        65.047,
+        19.657,
+        36
+      ],
+      "embedding": [
+        0.18,
+        0.138,
+        0.653
+      ]
+    },
+    {
+      "query": "personalized retrieval history",
+      "topic": "Personalization",
+      "timestamp": "2024-11-05T15:45:00-06:00",
+      "sessionId": "S5",
+      "metrics": {
+        "clicks": 5,
+        "dwellSeconds": 130.0,
+        "results": 10,
+        "engagement": 0.806
+      },
+      "position": [
+        88.598,
+        32.229,
+        48
+      ],
+      "embedding": [
+        0.029,
+        0.959,
+        0.99
+      ]
+    },
+    {
+      "query": "temporal relevance feedback",
+      "topic": "IR theory",
+      "timestamp": "2024-11-05T16:20:00-06:00",
+      "sessionId": "S5",
+      "metrics": {
+        "clicks": 4,
+        "dwellSeconds": 100.0,
+        "results": 13,
+        "engagement": 0.629
+      },
+      "position": [
+        96.449,
+        25.143,
+        24
+      ],
+      "embedding": [
+        0.379,
+        0.869,
+        0.116
+      ]
+    },
+    {
+      "query": "collaborative sensemaking",
+      "topic": "HCI",
+      "timestamp": "2024-11-05T18:05:00-06:00",
+      "sessionId": "S6",
+      "metrics": {
+        "clicks": 7,
+        "dwellSeconds": 150.0,
+        "results": 6,
+        "engagement": 1.0
+      },
+      "position": [
+        120.0,
+        40.0,
+        12
+      ],
+      "embedding": [
+        0.906,
+        0.376,
+        0.587
+      ]
+    }
+  ]
+}
