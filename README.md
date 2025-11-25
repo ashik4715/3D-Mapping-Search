@@ -32,6 +32,7 @@ python process_logs.py --config backend/config.yaml
 ```
 
 Key files:
+
 - `process_logs.py`: loads CSV data, derives engagement scores, builds smoothed bucketed terrain, and exports a scene graph the frontend understands.
 - `config.yaml`: edit `input_csv`, `output_scene`, and visualization parameters (bucket size, lane spacing, terrain smoothing).
 - `sample_logs/queries.csv`: seed dataset blending IR, HCI, and collaborative exploration queries from a single “lab day.”
@@ -57,6 +58,7 @@ npm run dev   # open the provided URL to interact with the scene
 ```
 
 Highlights:
+
 - `SearchTerrainScene.tsx` wires Three.js + OrbitControls to render the terrain mesh, place query spheres, and handle hover picking.
 - `App.tsx` lets you switch between preset “lenses,” filter by topic lane, and inspect metrics panels that explain why certain ridges dominate.
 - Production build: `npm run build` (already verified during this iteration).
@@ -74,4 +76,4 @@ Highlights:
 - Explore collaborative IR/HCI studies by adding annotations, co-presence indicators, or alternative terrain encodings (e.g., uncertainty ridges).
 
 See `docs/hoeber-brief.md` for a narrative pitch to Professor Hoeber plus future research directions centered on information retrieval and human-centred computing.  
-When you are ready to publish, remember to `git add .`, craft a descriptive commit (e.g., “Add 3D query-history prototype”), and `git push` to share the work.***
+When you are ready to publish, remember to `git add .`, craft a descriptive commit (e.g., “Add 3D query-history prototype”), and `git push` to share the work.\*\*\*
