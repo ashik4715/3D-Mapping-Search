@@ -88,16 +88,21 @@
 }
 
 .scene-panel {
-  min-height: 520px;
   border-radius: 20px;
   background: radial-gradient(circle at top, #0f1b33, #04060e);
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
 }
 
 .three-wrapper {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  width: min(100%, 1100px);
+  height: clamp(420px, 60vh, 660px);
+  margin: 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 .loading-state,

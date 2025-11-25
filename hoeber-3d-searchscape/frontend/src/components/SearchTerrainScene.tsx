@@ -63,7 +63,6 @@ export function SearchTerrainScene({ data, highlightTopic, onHover }: Props) {
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(mount.clientWidth, mount.clientHeight);
     mount.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
@@ -96,14 +95,17 @@ export function SearchTerrainScene({ data, highlightTopic, onHover }: Props) {
     cameraRef.current = camera;
     controlsRef.current = controls;
 
-    const handleResize = () => {
+    const applySize = () => {
       const container = mountRef.current;
       if (!container || !rendererRef.current || !cameraRef.current) return;
-      const { clientWidth, clientHeight } = container;
-      rendererRef.current.setSize(clientWidth, clientHeight);
-      cameraRef.current.aspect = clientWidth / clientHeight;
+      const { width, height } = getCanvasSize(container);
+      rendererRef.current.setSize(width, height, false);
+      rendererRef.current.domElement.style.width = `${width}px`;
+      rendererRef.current.domElement.style.height = `${height}px`;
+      cameraRef.current.aspect = width / height;
       cameraRef.current.updateProjectionMatrix();
     };
+    applySize();
 
     const handlePointerMove = (event: MouseEvent) => {
       if (!rendererRef.current) return;
@@ -112,7 +114,15 @@ export function SearchTerrainScene({ data, highlightTopic, onHover }: Props) {
       pointerRef.current.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
     };
 
-    window.addEventListener('resize', handleResize);
+    let resizeObserver: ResizeObserver | null = null;
+    let fallbackResizeListener = false;
+    if (typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(() => applySize());
+      resizeObserver.observe(mount);
+    } else {
+      window.addEventListener('resize', applySize);
+      fallbackResizeListener = true;
+    }
     renderer.domElement.addEventListener('pointermove', handlePointerMove);
 
     const animate = () => {
@@ -141,7 +151,10 @@ export function SearchTerrainScene({ data, highlightTopic, onHover }: Props) {
     animate();
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      resizeObserver?.disconnect();
+      if (fallbackResizeListener) {
+        window.removeEventListener('resize', applySize);
+      }
       renderer.domElement.removeEventListener('pointermove', handlePointerMove);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
@@ -311,5 +324,16 @@ function buildTerrainMesh(data: SceneData): THREE.Mesh {
   mesh.receiveShadow = true;
   mesh.castShadow = false;
   return mesh;
+}
+
+function getCanvasSize(container: HTMLElement): { width: number; height: number } {
+  const maxWidth = 1100;
+  const minWidth = 320;
+  const desiredWidth = Math.min(maxWidth, Math.max(minWidth, container.clientWidth));
+  const minHeight = 420;
+  const maxHeight = 660;
+  const responsiveHeight = desiredWidth * 0.55;
+  const desiredHeight = Math.min(maxHeight, Math.max(minHeight, responsiveHeight));
+  return { width: desiredWidth, height: desiredHeight };
 }
 
