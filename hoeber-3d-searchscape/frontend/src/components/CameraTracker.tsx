@@ -19,14 +19,12 @@ export function CameraTracker({ onDistanceChange, enabled }: CameraTrackerProps)
   const [error, setError] = useState<string | null>(null);
   const [permissionGranted, setPermissionGranted] = useState(false);
 
-  // Calibration: average face width in pixels at reference distance (60cm)
   const REFERENCE_FACE_WIDTH = 180;
   const REFERENCE_DISTANCE_CM = 60;
 
   const estimateDistance = useCallback((landmarks: any[]): number => {
     if (!landmarks || landmarks.length < 468) return 0;
 
-    // Use face bounding box width (cheek to cheek points for distance)
     const leftCheek = landmarks[234];
     const rightCheek = landmarks[454];
 
@@ -39,9 +37,8 @@ export function CameraTracker({ onDistanceChange, enabled }: CameraTrackerProps)
 
     if (faceWidth === 0) return 0;
 
-    // Distance estimation using similar triangles
     const distance = (REFERENCE_DISTANCE_CM * REFERENCE_FACE_WIDTH) / faceWidth;
-    return Math.max(30, Math.min(150, distance)); // Clamp between 30-150cm
+    return Math.max(30, Math.min(150, distance));
   }, []);
 
   const classifyDistance = useCallback((distance: number): DistanceState => {
@@ -87,25 +84,20 @@ export function CameraTracker({ onDistanceChange, enabled }: CameraTrackerProps)
 
         onDistanceChange(state, distance);
 
-        // Draw face mesh (optional visualization)
         drawConnectors(ctx, landmarks, FACEMESH_TESSELATION, {
-          color: '#C0C0C070',
+          color: '#60A5FA30',
           lineWidth: 1,
         });
         drawLandmarks(ctx, landmarks, {
-          color: '#FF0000',
+          color: '#3B82F6',
           lineWidth: 1,
-          radius: 1,
+          radius: 1.5,
         });
 
-        // Draw distance indicator
-        ctx.fillStyle = '#00FF00';
-        ctx.font = '16px sans-serif';
-        ctx.fillText(
-          `Distance: ${distance.toFixed(1)}cm (${state})`,
-          10,
-          30
-        );
+        ctx.fillStyle = '#1F2937';
+        ctx.font = 'bold 16px sans-serif';
+        ctx.fillText(`Distance: ${distance.toFixed(1)}cm`, 10, 30);
+        ctx.fillText(`Mode: ${state.toUpperCase()}`, 10, 50);
       } else {
         onDistanceChange('none', 0);
       }
@@ -133,7 +125,6 @@ export function CameraTracker({ onDistanceChange, enabled }: CameraTrackerProps)
         await camera.start();
         setPermissionGranted(true);
 
-        // Set canvas size to match video
         const updateCanvasSize = () => {
           if (canvas && video) {
             canvas.width = video.videoWidth;
@@ -168,36 +159,26 @@ export function CameraTracker({ onDistanceChange, enabled }: CameraTrackerProps)
   }
 
   return (
-    <div className="camera-tracker">
+    <div className="w-full h-full flex flex-col items-center justify-center">
       <video
         ref={videoRef}
-        className="camera-video"
+        className="hidden"
         autoPlay
         playsInline
         muted
-        style={{ display: 'none' }}
       />
       <canvas
         ref={canvasRef}
-        className="camera-canvas"
-        style={{
-          width: '100%',
-          maxWidth: '640px',
-          height: 'auto',
-          borderRadius: '8px',
-        }}
+        className="rounded-lg shadow-lg max-w-full h-auto"
       />
       {error && (
-        <div className="camera-error" style={{ color: '#ff0000', marginTop: '8px' }}>
+        <div className="mt-4 px-4 py-2 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
           {error}
         </div>
       )}
       {!permissionGranted && !error && (
-        <div className="camera-loading" style={{ marginTop: '8px' }}>
-          Requesting camera permission...
-        </div>
+        <div className="mt-4 text-gray-600 text-sm">Initializing camera...</div>
       )}
     </div>
   );
 }
-

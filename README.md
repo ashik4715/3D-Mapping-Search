@@ -78,7 +78,7 @@ Then open the provided URL (usually `http://localhost:5173`) in your browser.
 ✅ **Real-Time**: Instant response to distance changes  
 ✅ **Adaptive UI**: Smooth transitions between detail levels  
 ✅ **Responsive Design**: Works on various screen sizes  
-✅ **Accessible**: Clear visual feedback and instructions  
+✅ **Accessible**: Clear visual feedback and instructions
 
 ## Future Enhancements (For Professor Hoeber)
 
@@ -106,11 +106,13 @@ This project bridges **information retrieval** and **human-computer interaction*
 ## Troubleshooting
 
 **Camera not working?**
+
 - Ensure you've granted camera permissions
 - Check that no other application is using the camera
 - Try refreshing the page
 
 **Distance detection inaccurate?**
+
 - Ensure good lighting
 - Face the camera directly
 - Maintain 30-150cm distance from camera
