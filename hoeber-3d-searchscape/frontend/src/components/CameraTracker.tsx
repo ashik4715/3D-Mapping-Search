@@ -46,8 +46,11 @@ export function CameraTracker({ onDistanceChange, enabled }: CameraTrackerProps)
 
   const classifyDistance = useCallback((distance: number): DistanceState => {
     if (distance === 0) return 'none';
+    if (distance >= 50 && distance <= 58) return 'close';
+    if (distance >= 59 && distance <= 76) return 'medium';
+    if (distance >= 77) return 'far';
+    // For distances outside defined ranges, use closest range
     if (distance < 50) return 'close';
-    if (distance < 80) return 'medium';
     return 'far';
   }, []);
 
@@ -180,12 +183,6 @@ export function CameraTracker({ onDistanceChange, enabled }: CameraTrackerProps)
       <canvas
         ref={canvasRef}
         className="camera-canvas"
-        style={{
-          width: '100%',
-          maxWidth: '640px',
-          height: 'auto',
-          borderRadius: '8px',
-        }}
       />
       {error && (
         <div className="camera-error" style={{ color: '#ff0000', marginTop: '8px' }}>

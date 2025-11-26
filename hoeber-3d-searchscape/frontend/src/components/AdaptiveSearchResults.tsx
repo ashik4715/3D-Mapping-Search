@@ -29,11 +29,11 @@ export function AdaptiveSearchResults({ query, distanceState }: Props) {
   const getResultCount = () => {
     switch (distanceState) {
       case 'close':
-        return Math.min(50, filteredResults.length); // Show up to 50 when close
+        return Math.max(15, filteredResults.length); // Show 15+ papers when close
       case 'medium':
-        return Math.min(20, filteredResults.length); // Show up to 20 at medium
+        return 7; // Show exactly 7 papers at medium
       case 'far':
-        return Math.min(10, filteredResults.length); // Show up to 10 when far
+        return 2; // Show exactly 2 papers when far
       default:
         return Math.min(15, filteredResults.length);
     }

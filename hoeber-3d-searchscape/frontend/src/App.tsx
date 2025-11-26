@@ -93,7 +93,7 @@ function App() {
               <input
                 type="text"
                 className="search-input"
-                 placeholder="Search 300 research papers..."
+                placeholder="Search 300 research papers..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -124,12 +124,12 @@ function App() {
               </div>
             </div>
 
-             <div className="results-section">
-               <AdaptiveSearchResults
-                 query={searchQuery}
-                 distanceState={distanceState}
-               />
-             </div>
+            <div className="results-section">
+              <AdaptiveSearchResults
+                query={searchQuery}
+                distanceState={distanceState}
+              />
+            </div>
           </div>
 
           {/* Controls */}
