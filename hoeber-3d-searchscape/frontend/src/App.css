@@ -1,7 +1,7 @@
 .app-container {
   min-height: 100vh;
   padding: 2rem;
-  max-width: 1950px;
+  max-width: 1650px;
   margin: 0 auto;
 }
 
@@ -206,8 +206,8 @@
 }
 
 .camera-canvas {
-  width: 960px !important;
-  height: 720px !important;
+  width: 100%;
+  height: 100%;
   border-radius: 8px;
   display: block;
   margin: 0 auto;
@@ -309,7 +309,7 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 0.75rem;
-  font-size: 0.9rem;
+  font-size: 0.6rem;
   color: #5a6c7d;
 }
 
@@ -377,7 +377,7 @@
 
 .result-title {
   margin: 0 0 0.5rem 0;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .result-title a {
@@ -400,11 +400,12 @@
   color: #5a6c7d;
   line-height: 1.1;
   margin: 0.5rem 0;
+  font-size: 0.6rem;
 }
 
-.result-description {
-  font-size: 0.95rem;
-}
+/* .result-description {
+  font-size: 0.5rem;
+} */
 
 .result-meta {
   margin-top: 0.5rem;

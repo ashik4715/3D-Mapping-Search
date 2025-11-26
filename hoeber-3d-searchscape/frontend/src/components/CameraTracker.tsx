@@ -49,8 +49,8 @@ export function CameraTracker({
   const classifyDistance = useCallback((distance: number): DistanceState => {
     if (distance === 0) return "none";
     if (distance >= 60 && distance <= 70) return "close";
-    if (distance >= 70 && distance <= 86) return "medium";
-    if (distance >= 87) return "far";
+    if (distance >= 70 && distance <= 80) return "medium";
+    if (distance >= 81) return "far";
     // For distances outside defined ranges, use closest range
     if (distance < 60) return "close";
     return "far";
@@ -104,7 +104,7 @@ export function CameraTracker({
         });
 
         // Draw distance indicator
-        ctx.fillStyle = "#00FF00";
+        ctx.fillStyle = "#7f44fd";
         ctx.font = "16px sans-serif";
         ctx.fillText(`Distance: ${distance.toFixed(1)}cm (${state})`, 10, 30);
       } else {
