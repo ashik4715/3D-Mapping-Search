@@ -1,17 +1,19 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
-import { FaceMesh } from '@mediapipe/face_mesh';
-import { Camera } from '@mediapipe/camera_utils';
-import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
-import { FACEMESH_TESSELATION } from '@mediapipe/face_mesh';
+import { Camera } from "@mediapipe/camera_utils";
+import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
+import { FACEMESH_TESSELATION, FaceMesh } from "@mediapipe/face_mesh";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-export type DistanceState = 'close' | 'medium' | 'far' | 'none';
+export type DistanceState = "close" | "medium" | "far" | "none";
 
 interface CameraTrackerProps {
   onDistanceChange: (state: DistanceState, distance: number) => void;
   enabled: boolean;
 }
 
-export function CameraTracker({ onDistanceChange, enabled }: CameraTrackerProps) {
+export function CameraTracker({
+  onDistanceChange,
+  enabled,
+}: CameraTrackerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const faceMeshRef = useRef<FaceMesh | null>(null);
@@ -33,7 +35,7 @@ export function CameraTracker({ onDistanceChange, enabled }: CameraTrackerProps)
     const faceWidth = Math.abs(
       Math.sqrt(
         Math.pow(leftCheek.x - rightCheek.x, 2) +
-        Math.pow(leftCheek.y - rightCheek.y, 2)
+          Math.pow(leftCheek.y - rightCheek.y, 2)
       ) * (canvasRef.current?.width || 640)
     );
 
@@ -45,13 +47,13 @@ export function CameraTracker({ onDistanceChange, enabled }: CameraTrackerProps)
   }, []);
 
   const classifyDistance = useCallback((distance: number): DistanceState => {
-    if (distance === 0) return 'none';
-    if (distance >= 50 && distance <= 58) return 'close';
-    if (distance >= 59 && distance <= 76) return 'medium';
-    if (distance >= 77) return 'far';
+    if (distance === 0) return "none";
+    if (distance >= 60 && distance <= 70) return "close";
+    if (distance >= 70 && distance <= 86) return "medium";
+    if (distance >= 87) return "far";
     // For distances outside defined ranges, use closest range
-    if (distance < 50) return 'close';
-    return 'far';
+    if (distance < 60) return "close";
+    return "far";
   }, []);
 
   useEffect(() => {
@@ -59,7 +61,7 @@ export function CameraTracker({ onDistanceChange, enabled }: CameraTrackerProps)
 
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
 
     if (!ctx) return;
 
@@ -92,25 +94,21 @@ export function CameraTracker({ onDistanceChange, enabled }: CameraTrackerProps)
 
         // Draw face mesh (optional visualization)
         drawConnectors(ctx, landmarks, FACEMESH_TESSELATION, {
-          color: '#C0C0C070',
+          color: "#C0C0C070",
           lineWidth: 1,
         });
         drawLandmarks(ctx, landmarks, {
-          color: '#FF0000',
+          color: "#FF0000",
           lineWidth: 1,
           radius: 1,
         });
 
         // Draw distance indicator
-        ctx.fillStyle = '#00FF00';
-        ctx.font = '16px sans-serif';
-        ctx.fillText(
-          `Distance: ${distance.toFixed(1)}cm (${state})`,
-          10,
-          30
-        );
+        ctx.fillStyle = "#00FF00";
+        ctx.font = "16px sans-serif";
+        ctx.fillText(`Distance: ${distance.toFixed(1)}cm (${state})`, 10, 30);
       } else {
-        onDistanceChange('none', 0);
+        onDistanceChange("none", 0);
       }
 
       ctx.restore();
@@ -144,11 +142,11 @@ export function CameraTracker({ onDistanceChange, enabled }: CameraTrackerProps)
           }
         };
 
-        video.addEventListener('loadedmetadata', updateCanvasSize);
+        video.addEventListener("loadedmetadata", updateCanvasSize);
         updateCanvasSize();
       } catch (err: any) {
-        console.error('Camera error:', err);
-        setError(err.message || 'Failed to access camera');
+        console.error("Camera error:", err);
+        setError(err.message || "Failed to access camera");
         setPermissionGranted(false);
       }
     };
@@ -178,23 +176,22 @@ export function CameraTracker({ onDistanceChange, enabled }: CameraTrackerProps)
         autoPlay
         playsInline
         muted
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
       />
-      <canvas
-        ref={canvasRef}
-        className="camera-canvas"
-      />
+      <canvas ref={canvasRef} className="camera-canvas" />
       {error && (
-        <div className="camera-error" style={{ color: '#ff0000', marginTop: '8px' }}>
+        <div
+          className="camera-error"
+          style={{ color: "#ff0000", marginTop: "8px" }}
+        >
           {error}
         </div>
       )}
       {!permissionGranted && !error && (
-        <div className="camera-loading" style={{ marginTop: '8px' }}>
+        <div className="camera-loading" style={{ marginTop: "8px" }}>
           Requesting camera permission...
         </div>
       )}
     </div>
   );
 }
-
