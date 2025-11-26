@@ -1,79 +1,140 @@
-# 3D-Mapping-Search
+# Proximity-Based Adaptive Search Interface
 
-Prototype that fuses Orland Hoeber’s long-running 3D reconstruction research with a modern query-history intelligence workflow. Search logs are transformed by Python into a structured “scene graph,” then rendered as an explorable Three.js terrain so researchers can visually navigate the evolution of intent clusters over time.
+An interactive search interface that adapts to user distance using laptop camera and face detection. When users lean forward, the interface shows detailed search results with full descriptions. When they sit back, it displays a brief overview with key information.
 
-## Repository structure
+## Project Overview
+
+This project demonstrates **proximity-based human-computer interaction** for search interfaces. Using MediaPipe Face Detection and webcam access, the system:
+
+- 📹 **Tracks user distance** in real-time using face detection
+- 🔍 **Adapts search result detail** based on proximity:
+  - **Close** (< 50cm): Full results with detailed descriptions
+  - **Medium** (50-80cm): Moderate detail with snippets
+  - **Far** (> 80cm): Overview with top results only
+- 🎯 **Respects privacy** - all processing happens locally in the browser
+
+Perfect for demonstrating to Professor Hoeber how sensor-based interactions can enhance information retrieval interfaces.
+
+## Repository Structure
 
 ```
 hoeber-3d-searchscape/
-├── backend/                # Python log processor + sample data
-├── frontend/               # Vite + React + Three.js experience
+├── backend/                # FastAPI backend (optional, for future extensions)
+├── frontend/               # React + MediaPipe camera tracking app
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── CameraTracker.tsx      # Face detection & distance tracking
+│   │   │   └── AdaptiveSearchResults.tsx  # Distance-responsive UI
+│   │   └── App.tsx                    # Main application
 └── docs/
-    └── hoeber-brief.md     # Pitch-ready summary for Dr. Hoeber
+    └── hoeber-brief.md     # Research pitch for Dr. Hoeber
 ```
 
-## Data flow in brief
+## Quick Start
 
-1. `backend/sample_logs/queries.csv` contains structured search-history events (timestamp, topic, engagement metrics).
-2. `backend/process_logs.py` (configurable via `backend/config.yaml`) normalizes timestamps, buckets engagement, and emits `backend/dist/scene.json`.
-3. The generated scene JSON is copied or served to the frontend (`frontend/public/data/sample-hoeber.json`) where the Three.js renderer converts it into a 3D terrain plus query markers, colored by topic lanes.
+### Prerequisites
 
-## Backend: processing search logs
+- Node.js 18+ and npm
+- Modern browser with camera access (Chrome, Edge, Firefox)
+- Webcam or laptop camera
 
-```bash
-cd hoeber-3d-searchscape/backend
-python -m venv .venv
-# macOS/Linux: source .venv/bin/activate
-# Windows (PowerShell): .\.venv\Scripts\Activate.ps1
-# Windows (Git Bash/CMD): source .venv/Scripts/activate
-pip install -r requirements.txt
-python process_logs.py --config backend/config.yaml
-# Output ➜ backend/dist/scene.json
-```
-
-Key files:
-
-- `process_logs.py`: loads CSV data, derives engagement scores, builds smoothed bucketed terrain, and exports a scene graph the frontend understands.
-- `config.yaml`: edit `input_csv`, `output_scene`, and visualization parameters (bucket size, lane spacing, terrain smoothing).
-- `sample_logs/queries.csv`: seed dataset blending IR, HCI, and collaborative exploration queries from a single “lab day.”
-
-## Backend API + Swagger UI
-
-```bash
-cd hoeber-3d-searchscape/backend
-uvicorn app:app --reload --port 8000
-# Open http://localhost:8000/docs for interactive Swagger
-```
-
-- `GET /api/scene?refresh=true` regenerates the JSON before returning it.
-- `GET /api/health` confirms dataset/config status for quick diagnostics.
-
-## Frontend: navigating the 3D landscape
+### Frontend Setup
 
 ```bash
 cd hoeber-3d-searchscape/frontend
 npm install
-# optional: echo "VITE_API_BASE_URL=http://localhost:8000/api" > .env.local
-npm run dev   # open the provided URL to interact with the scene
+npm run dev
 ```
 
-Highlights:
+Then open the provided URL (usually `http://localhost:5173`) in your browser.
 
-- `SearchTerrainScene.tsx` wires Three.js + OrbitControls to render the terrain mesh, place query spheres, and handle hover picking.
-- `App.tsx` lets you switch between preset “lenses,” filter by topic lane, and inspect metrics panels that explain why certain ridges dominate.
-- Production build: `npm run build` (already verified during this iteration).
+### Using the Application
 
-## Verification checklist
+1. **Grant camera permission** when prompted
+2. **Position yourself** at a comfortable distance from the camera
+3. **Observe the interface** adapting as you:
+   - **Lean forward** → See detailed search results with full descriptions
+   - **Sit back** → See brief overview with top results
+4. **Enter a search query** to see adaptive results
 
-- [x] Ran `python backend/process_logs.py --config backend/config.yaml` to generate a fresh `scene.json`.
-- [x] Copied the scene file into `frontend/public/data/sample-hoeber.json`.
-- [x] Executed `npm run build` within `frontend/` to ensure the Three.js view compiles cleanly.
+## Technology Stack
 
-## Extending the concept
+- **React 19** + **TypeScript** - Modern frontend framework
+- **MediaPipe Face Mesh** - Real-time face detection and tracking
+- **getUserMedia API** - Camera access
+- **Canvas API** - Visualization of face tracking
 
-- Swap in real user logs by updating `config.yaml` to point at new CSV/JSON exports.
-- Stream live data by exposing the Python processor as a FastAPI endpoint; the frontend already fetches via HTTP.
-- Explore collaborative IR/HCI studies by adding annotations, co-presence indicators, or alternative terrain encodings (e.g., uncertainty ridges).
+## How It Works
 
-See `docs/hoeber-brief.md` for a narrative pitch to Professor Hoeber plus future research directions centered on information retrieval and human-centred computing.  
-When you are ready to publish, remember to `git add .`, craft a descriptive commit (e.g., “Add 3D query-history prototype”), and `git push` to share the work.\*\*\*
+1. **Camera Access**: Requests user permission for camera access
+2. **Face Detection**: Uses MediaPipe Face Mesh to detect facial landmarks
+3. **Distance Estimation**: Calculates distance based on face bounding box size using similar triangles
+4. **State Classification**: Categorizes distance into close/medium/far states
+5. **UI Adaptation**: Dynamically adjusts search result presentation based on distance state
+
+## Features
+
+✅ **Privacy-First**: All processing happens locally - no data leaves your device  
+✅ **Real-Time**: Instant response to distance changes  
+✅ **Adaptive UI**: Smooth transitions between detail levels  
+✅ **Responsive Design**: Works on various screen sizes  
+✅ **Accessible**: Clear visual feedback and instructions  
+
+## Future Enhancements (For Professor Hoeber)
+
+- **Gesture Recognition**: Hand tracking for additional interaction modes
+- **Eye Tracking**: Gaze-based interaction for result selection
+- **Multi-User Support**: Collaborative search sessions
+- **Backend Integration**: Real search API integration with adaptive ranking
+- **VR/AR Support**: Extend to immersive environments
+- **Calibration Mode**: Personal distance calibration for accuracy
+
+## Research Context
+
+This project bridges **information retrieval** and **human-computer interaction**:
+
+- **IR Perspective**: Adaptive result presentation based on user context (proximity)
+- **HCI Perspective**: Natural, embodied interaction without touch/click
+- **Sensor Integration**: Demonstrates practical use of computer vision for interface control
+
+## Browser Compatibility
+
+- ✅ Chrome/Edge (Chromium) - Full support
+- ✅ Firefox - Full support
+- ✅ Safari - May have limitations with MediaPipe models
+
+## Troubleshooting
+
+**Camera not working?**
+- Ensure you've granted camera permissions
+- Check that no other application is using the camera
+- Try refreshing the page
+
+**Distance detection inaccurate?**
+- Ensure good lighting
+- Face the camera directly
+- Maintain 30-150cm distance from camera
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## License
+
+MIT License - Feel free to use this for research and educational purposes.
+
+---
+
+Built for demonstrating proximity-based interaction to Professor Orland Hoeber at University of Regina.
