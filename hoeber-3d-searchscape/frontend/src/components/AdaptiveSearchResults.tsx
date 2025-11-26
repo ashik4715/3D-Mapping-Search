@@ -63,10 +63,14 @@ export function AdaptiveSearchResults({ query, distanceState }: Props) {
     return `Showing ${shown} of ${total} results`;
   };
 
+  const hasQuery = query.trim().length > 0;
+  
   return (
     <div className="search-results">
       <div className="results-header">
-        <h2>Search Results for &quot;{query || 'all research papers'}&quot;</h2>
+        <h2>
+          {hasQuery ? `Search Results for "${query}"` : 'All Research Papers'}
+        </h2>
         <div className="detail-indicator">
           Mode: <strong>{getDetailLevel()}</strong> ({distanceState})
         </div>
@@ -74,10 +78,14 @@ export function AdaptiveSearchResults({ query, distanceState }: Props) {
       <p className="results-count">{getResultCountText()}</p>
       
       <div className="results-list">
-        {displayResults.length === 0 ? (
+        {displayResults.length === 0 && hasQuery ? (
           <div className="no-results">
             <p>No results found for &quot;{query}&quot;</p>
             <p>Try different keywords</p>
+          </div>
+        ) : displayResults.length === 0 ? (
+          <div className="no-results">
+            <p>No papers available</p>
           </div>
         ) : (
           displayResults.map((paper, idx) => (
